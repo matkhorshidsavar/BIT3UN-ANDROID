@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320">
+  <defs><style>.card{fill:#071a31;stroke:#2f5f99;stroke-width:2}.t{fill:#eaf3ff;font:700 18px Arial}.m{fill:#ffc22a;font:900 24px Arial}</style></defs>
+  <rect width="960" height="320" fill="#020712"/>
+  <g transform="translate(16 16)">
+    <g id="bank"><rect class="card" width="140" height="56" rx="8"/><circle cx="28" cy="28" r="15" fill="#178bff"/><text class="m" x="23" y="36">ب</text></g>
+    <use href="#bank" x="0" y="0"/><text class="t" x="54" y="35">Melli</text>
+    <use href="#bank" x="156" y="0"/><text class="t" x="210" y="35">Mellat</text>
+    <use href="#bank" x="312" y="0"/><text class="t" x="366" y="35">Saderat</text>
+    <use href="#bank" x="468" y="0"/><text class="t" x="522" y="35">Tejarat</text>
+    <use href="#bank" x="624" y="0"/><text class="t" x="678" y="35">Sepah</text>
+    <use href="#bank" x="780" y="0"/><text class="t" x="834" y="35">Pasargad</text>
+    <use href="#bank" x="0" y="72"/><text class="t" x="54" y="107">Parsian</text>
+    <use href="#bank" x="156" y="72"/><text class="t" x="210" y="107">Saman</text>
+    <use href="#bank" x="312" y="72"/><text class="t" x="366" y="107">Sina</text>
+    <use href="#bank" x="468" y="72"/><text class="t" x="522" y="107">Shahr</text>
+    <use href="#bank" x="624" y="72"/><text class="t" x="678" y="107">Ayandeh</text>
+    <use href="#bank" x="780" y="72"/><text class="t" x="834" y="107">Day</text>
+    <use href="#bank" x="0" y="144"/><text class="t" x="54" y="179">EN Bank</text>
+    <use href="#bank" x="156" y="144"/><text class="t" x="210" y="179">Karafarin</text>
+    <use href="#bank" x="312" y="144"/><text class="t" x="366" y="179">Keshavarzi</text>
+    <use href="#bank" x="468" y="144"/><text class="t" x="522" y="179">Maskan</text>
+    <use href="#bank" x="624" y="144"/><text class="t" x="678" y="179">Refah</text>
+    <use href="#bank" x="780" y="144"/><text class="t" x="834" y="179">Post</text>
+    <use href="#bank" x="0" y="216"/><text class="t" x="54" y="251">Tourism</text>
+    <use href="#bank" x="156" y="216"/><text class="t" x="210" y="251">Iran Zamin</text>
+    <use href="#bank" x="312" y="216"/><text class="t" x="366" y="251">Resalat</text>
+    <use href="#bank" x="468" y="216"/><text class="t" x="522" y="251">Mehr</text>
+    <use href="#bank" x="624" y="216"/><text class="t" x="678" y="251">Middle East</text>
+    <use href="#bank" x="780" y="216"/><text class="t" x="834" y="251">Sarmayeh</text>
+  </g>
+</svg>

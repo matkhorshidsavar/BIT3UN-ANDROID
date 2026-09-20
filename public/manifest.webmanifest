@@ -1,0 +1,18 @@
+{
+  "name": "Bitsun Exchange",
+  "short_name": "Bitsun",
+  "start_url": "/Trade",
+  "display": "standalone",
+  "background_color": "#020712",
+  "theme_color": "#020916",
+  "dir": "rtl",
+  "lang": "fa",
+  "icons": [
+    {
+      "src": "/public/assets/bitsun-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

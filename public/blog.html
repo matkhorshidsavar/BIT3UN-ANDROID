@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>وبلاگ بیتسان | Bit3un Blog</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #020712;
+        --panel: rgba(7, 23, 43, .86);
+        --panel-2: rgba(9, 36, 66, .58);
+        --line: rgba(94, 148, 205, .28);
+        --text: #f8fbff;
+        --muted: #a9b8ca;
+        --gold: #ffc22a;
+        --blue: #178bff;
+        --green: #13d07b;
+        --red: #ff4158;
+        --font: "Vazirmatn", "Vazir", Tahoma, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font-family: var(--font);
+        background:
+          radial-gradient(circle at 20% 12%, rgba(23, 139, 255, .28), transparent 26rem),
+          radial-gradient(circle at 78% 18%, rgba(255, 194, 42, .18), transparent 22rem),
+          linear-gradient(180deg, var(--bg), #031126 48%, #020711);
+      }
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+      .shell { width: min(1240px, calc(100vw - 32px)); margin-inline: auto; }
+      .glass {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(9, 29, 55, .86), rgba(3, 15, 31, .76));
+        box-shadow: 0 26px 90px rgba(0, 0, 0, .36);
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(2, 7, 18, .86);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(84, 184, 255, .14);
+      }
+      .nav {
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+      .brand { display: flex; align-items: center; gap: 12px; font-weight: 950; }
+      .mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        color: #061226;
+        background: linear-gradient(180deg, #ffd25f, #f4a908);
+      }
+      nav { display: flex; gap: 8px; overflow-x: auto; }
+      nav a {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 12px;
+        border-radius: 7px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      nav a.active, nav a:hover { color: var(--gold); background: rgba(255, 194, 42, .08); }
+      .btn {
+        min-height: 42px;
+        border: 1px solid rgba(255, 194, 42, .48);
+        border-radius: 7px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 14px;
+        color: #061226;
+        background: linear-gradient(180deg, #ffd25f, #f4a908);
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .hero {
+        margin-top: 18px;
+        min-height: 460px;
+        display: grid;
+        grid-template-columns: 1fr .9fr;
+        gap: 28px;
+        align-items: center;
+        padding: 38px;
+        overflow: hidden;
+        position: relative;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0 38% 0 0;
+        background: url("/public/assets/bitsun-landing-reference.png") left center / cover no-repeat;
+        opacity: .42;
+        mask-image: linear-gradient(90deg, black 0%, transparent 88%);
+      }
+      .hero-copy { position: relative; z-index: 1; max-width: 680px; }
+      .eyebrow { color: var(--gold); font-weight: 950; }
+      h1 {
+        margin: 12px 0;
+        font-size: clamp(2.45rem, 6vw, 5.5rem);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      .lead {
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.9;
+      }
+      .subscribe {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        margin-top: 22px;
+        max-width: 540px;
+      }
+      input {
+        min-height: 48px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 0 14px;
+        color: var(--text);
+        background: rgba(2, 9, 18, .72);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .card {
+        padding: 18px;
+        min-width: 0;
+      }
+      .tag {
+        display: inline-flex;
+        min-height: 28px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0 9px;
+        color: var(--gold);
+        font-size: .78rem;
+      }
+      .card h2, .card h3 { margin: 12px 0 8px; }
+      .card p { color: var(--muted); line-height: 1.75; margin: 0; }
+      .market-mini {
+        display: grid;
+        gap: 9px;
+      }
+      .row {
+        min-height: 48px;
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid rgba(94, 148, 205, .14);
+      }
+      .num { direction: ltr; unicode-bidi: isolate; font-variant-numeric: tabular-nums; }
+      .up { color: var(--green); }
+      .down { color: var(--red); }
+      footer {
+        margin: 18px auto 28px;
+        padding: 24px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 760px) {
+        .nav { align-items: flex-start; flex-direction: column; padding: 12px 0; }
+        .hero, .grid, .cards { grid-template-columns: 1fr; }
+        .hero { padding: 24px; }
+        .hero::before { inset: 35% 0 0; opacity: .28; }
+        .subscribe { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="shell nav">
+        <a class="brand" href="/"><span class="mark">B</span><span>Bit3un Blog</span></a>
+        <nav aria-label="Blog navigation">
+          <a class="active" href="/">وبلاگ</a>
+          <a href="https://bit3un.ir">صرافی</a>
+          <a href="https://admin-panel.bit3un.ir">پنل مدیریت</a>
+          <a href="#security">امنیت</a>
+          <a href="#markets">بازار</a>
+        </nav>
+      </div>
+    </header>
+    <main class="shell">
+      <section class="hero glass">
+        <div class="hero-copy">
+          <div class="eyebrow">آموزش، تحلیل و اطلاع‌رسانی بیتسان</div>
+          <h1>وبلاگ حرفه‌ای بازار رمزارز جنوب</h1>
+          <p class="lead">اخبار محصول، راهنمای امنیت حساب، آموزش واریز و برداشت چندزنجیره‌ای، تحلیل قیمت تومان و اطلاعیه‌های عملیاتی صرافی بیتسان.</p>
+          <form class="subscribe" onsubmit="event.preventDefault()">
+            <input type="email" autocomplete="email" placeholder="ایمیل شما برای دریافت خبرنامه" aria-label="Email address" />
+            <button class="btn" type="submit">عضویت</button>
+          </form>
+        </div>
+      </section>
+      <section class="cards">
+        <article class="card glass" id="security"><span class="tag">امنیت</span><h2>چطور حساب بیتسان را ایمن نگه داریم؟</h2><p>راهنمای فعال‌سازی احراز هویت، تشخیص پیامک معتبر کد تایید، و نکات جلوگیری از فیشینگ.</p></article>
+        <article class="card glass"><span class="tag">کیف پول</span><h2>واریز چندزنجیره‌ای بدون اشتباه شبکه</h2><p>قبل از انتقال USDT، شبکه TRC20، ERC20 یا BEP20 را با آدرس مقصد تطبیق دهید و رسید تراکنش را نگه دارید.</p></article>
+        <article class="card glass" id="markets"><span class="tag">بازار</span><h2>خواندن قیمت تومان در بازار رمزارز</h2><p>قیمت‌ها از منابع معتبر و backend صرافی خوانده می‌شوند و کلیدهای API فقط روی سرور باقی می‌مانند.</p></article>
+      </section>
+      <section class="grid">
+        <article class="card glass"><span class="tag">اطلاعیه</span><h2>وضعیت سرویس‌ها</h2><p>این نسخه وبلاگ همراه با فرانت‌اند جدید بسته‌بندی شده و از همان router امن برای host های Bit3un استفاده می‌کند.</p></article>
+        <aside class="card glass">
+          <h3>بازارهای پر بازدید</h3>
+          <div class="market-mini">
+            <div class="row"><strong>BTC / IRT</strong><span class="num">۳,۴۸۵,۶۷۰,۰۰۰</span><span class="up num">+2.35%</span></div>
+            <div class="row"><strong>ETH / IRT</strong><span class="num">۲۰۴,۵۶۷,۰۰۰</span><span class="up num">+1.42%</span></div>
+            <div class="row"><strong>USDT / IRT</strong><span class="num">۶۵,۳۲۰</span><span class="down num">-0.08%</span></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+    <footer class="shell glass"><span>© Bit3un Exchange</span><span>قیمت‌ها و داده‌های کاربری باید از backend و دیتابیس فعلی خوانده شوند.</span></footer>
+  </body>
+</html>

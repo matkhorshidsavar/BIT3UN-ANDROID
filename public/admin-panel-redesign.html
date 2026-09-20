@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bit3un Admin Console</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f172a;
+        --surface: #151d2f;
+        --surface-2: #1d283d;
+        --line: #334155;
+        --text: #f8fafc;
+        --muted: #aab4c6;
+        --gold: #f59e0b;
+        --gold-2: #fbbf24;
+        --violet: #8b5cf6;
+        --green: #22c55e;
+        --red: #ef4444;
+        --orange: #f97316;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(90deg, rgba(245, 158, 11, .07) 1px, transparent 1px) 0 0 / 42px 42px,
+          linear-gradient(180deg, #101827, #0b1020 56%, #0f172a);
+        color: var(--text);
+        font-family: "Vazirmatn", "Vazir", "Fira Sans", ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        min-height: 100vh;
+      }
+
+      aside {
+        border-right: 1px solid var(--line);
+        background: rgba(15, 23, 42, .92);
+        padding: 22px 18px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .mark {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        background: var(--gold);
+        color: #111827;
+        font-weight: 950;
+      }
+
+      .brand strong { font-size: 1.15rem; }
+      .brand span { color: var(--muted); font-size: .82rem; }
+
+      nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 12px;
+        border-radius: 7px;
+        border: 1px solid transparent;
+        font-weight: 750;
+      }
+
+      nav a.active, nav a:hover {
+        color: var(--text);
+        border-color: rgba(245, 158, 11, .38);
+        background: rgba(245, 158, 11, .08);
+      }
+
+      main {
+        padding: 22px;
+        min-width: 0;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.7rem, 3vw, 3.2rem);
+        letter-spacing: 0;
+        line-height: .95;
+      }
+
+      .sub {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      input, button {
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        min-height: 42px;
+        background: var(--surface);
+        color: var(--text);
+        padding: 0 12px;
+      }
+
+      input {
+        min-width: min(380px, 100%);
+        font-family: "Fira Code", ui-monospace, monospace;
+      }
+
+      button {
+        cursor: pointer;
+        font-weight: 850;
+      }
+
+      button.primary {
+        background: var(--gold);
+        color: #111827;
+        border-color: var(--gold);
+      }
+
+      button:focus-visible, input:focus-visible, a:focus-visible {
+        outline: 3px solid var(--gold-2);
+        outline-offset: 2px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 14px;
+      }
+
+      .card {
+        background: rgba(21, 29, 47, .92);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        min-width: 0;
+      }
+
+      .span-3 { grid-column: span 3; }
+      .span-4 { grid-column: span 4; }
+      .span-8 { grid-column: span 8; }
+      .span-12 { grid-column: span 12; }
+
+      .label {
+        color: var(--muted);
+        font: 800 .72rem "Fira Code", ui-monospace, monospace;
+        text-transform: uppercase;
+      }
+
+      .metric {
+        margin-top: 10px;
+        font-size: 2rem;
+        font-weight: 950;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font: 800 .76rem "Fira Code", ui-monospace, monospace;
+      }
+
+      .pill::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: currentColor;
+      }
+
+      .ok { color: var(--green); }
+      .bad { color: var(--red); }
+      .warn { color: var(--orange); }
+
+      .table-wrap { overflow-x: auto; }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 760px;
+      }
+
+      th, td {
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(51, 65, 85, .78);
+        text-align: left;
+        vertical-align: middle;
+      }
+
+      th {
+        color: var(--muted);
+        font: 800 .72rem "Fira Code", ui-monospace, monospace;
+        text-transform: uppercase;
+      }
+
+      tr:hover td {
+        background: rgba(245, 158, 11, .045);
+      }
+
+      .mono { font-family: "Fira Code", ui-monospace, monospace; }
+      .muted { color: var(--muted); }
+
+      .alert {
+        border: 1px solid rgba(239, 68, 68, .45);
+        background: rgba(239, 68, 68, .08);
+        color: #fecaca;
+        border-radius: 8px;
+        padding: 14px;
+        margin-bottom: 14px;
+      }
+
+      .empty {
+        color: var(--muted);
+        padding: 22px 0;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 920px) {
+        .app { grid-template-columns: 1fr; }
+        aside {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        header { display: block; }
+        .toolbar { justify-content: start; margin-top: 14px; }
+        .span-3, .span-4, .span-8 { grid-column: span 12; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside>
+        <div class="brand">
+          <div class="mark">B</div>
+          <div>
+            <strong>Bit3un Admin</strong><br />
+            <span>Read-only user data console</span>
+          </div>
+        </div>
+        <nav aria-label="Admin sections">
+          <a href="#overview" class="active">Overview</a>
+          <a href="#users">Users</a>
+          <a href="#wallets">Wallets</a>
+          <a href="#orders">Orders</a>
+          <a href="#audit">Audit</a>
+          <a href="#health">Health</a>
+        </nav>
+      </aside>
+
+      <main>
+        <header>
+          <div>
+            <h1>Exchange Control Room</h1>
+            <p class="sub">Connects to the new Bit3un backend without writing to the user database.</p>
+          </div>
+          <div class="toolbar">
+            <input id="apiBase" aria-label="API base URL" value="https://bit3un.ir" />
+            <button id="saveBase">Save API</button>
+            <button class="primary" id="refresh">Refresh</button>
+          </div>
+        </header>
+
+        <div id="alert" class="alert" role="alert" hidden></div>
+
+        <section id="overview" class="grid">
+          <article class="card span-3">
+            <div class="label">API Status</div>
+            <div class="metric"><span id="apiStatus" class="pill warn">checking</span></div>
+          </article>
+          <article class="card span-3">
+            <div class="label">Users</div>
+            <div id="usersMetric" class="metric mono">--</div>
+          </article>
+          <article class="card span-3">
+            <div class="label">Open Orders</div>
+            <div id="ordersMetric" class="metric mono">--</div>
+          </article>
+          <article class="card span-3">
+            <div class="label">KYC Queue</div>
+            <div id="kycMetric" class="metric mono">--</div>
+          </article>
+
+          <article id="users" class="card span-8">
+            <div class="label">Users From Existing Database</div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Email / Phone</th>
+                    <th>KYC</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+                <tbody id="usersRows"></tbody>
+              </table>
+            </div>
+            <div id="usersEmpty" class="empty">Awaiting live backend data. No local sample users are written or displayed as real records.</div>
+          </article>
+
+          <article id="health" class="card span-4">
+            <div class="label">Server Health</div>
+            <p class="muted">Expected production fix path:</p>
+            <ol class="muted">
+              <li>Restore stable SSH on port <span class="mono">3031</span>.</li>
+              <li>Confirm Nginx upstream for Bit3un/admin panel.</li>
+              <li>Start frontend on <span class="mono">127.0.0.1:3004</span> or update Nginx to the real port.</li>
+              <li>Keep database services untouched unless a verified backup exists.</li>
+            </ol>
+          </article>
+
+          <article id="audit" class="card span-12">
+            <div class="label">Audit Guardrail</div>
+            <p class="muted">This console intentionally uses only <span class="mono">GET</span> requests. Mutating admin actions should require explicit server-side audit logs, role checks, and backup confirmation.</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const endpoints = {
+        health: ["/api/health", "/health", "/"],
+        summary: ["/api/admin/summary", "/admin/api/summary"],
+        users: ["/api/admin/users?limit=25", "/admin/api/users?limit=25"],
+      };
+
+      const $ = (id) => document.getElementById(id);
+      const apiBase = $("apiBase");
+      apiBase.value = localStorage.getItem("bit3unAdminApiBase") || "https://bit3un.ir";
+
+      function setAlert(message) {
+        const box = $("alert");
+        box.hidden = !message;
+        box.textContent = message || "";
+      }
+
+      async function getFirst(base, paths) {
+        let lastError = null;
+        for (const path of paths) {
+          try {
+            const response = await fetch(new URL(path, base), {
+              method: "GET",
+              headers: { "Accept": "application/json,text/plain,*/*" },
+              cache: "no-store",
+              credentials: "include",
+            });
+            if (!response.ok) {
+              lastError = new Error(`${path} returned ${response.status}`);
+              continue;
+            }
+            const text = await response.text();
+            try {
+              return { path, data: JSON.parse(text) };
+            } catch {
+              return { path, data: { ok: true, text: text.slice(0, 180) } };
+            }
+          } catch (error) {
+            lastError = error;
+          }
+        }
+        throw lastError || new Error("No endpoint responded");
+      }
+
+      function normalizeUsers(payload) {
+        const list = Array.isArray(payload) ? payload : payload.users || payload.data || payload.items || [];
+        return Array.isArray(list) ? list : [];
+      }
+
+      function renderUsers(users) {
+        const rows = $("usersRows");
+        rows.innerHTML = "";
+        $("usersEmpty").hidden = users.length > 0;
+        for (const user of users) {
+          const tr = document.createElement("tr");
+          const id = user.id ?? user._id ?? user.user_id ?? "--";
+          const contact = user.email ?? user.phone ?? user.mobile ?? user.username ?? "--";
+          const kyc = user.kyc_status ?? user.kycStatus ?? user.verification_status ?? "--";
+          const status = user.status ?? user.state ?? (user.is_active === false ? "blocked" : "active");
+          const created = user.created_at ?? user.createdAt ?? "--";
+          tr.innerHTML = `
+            <td class="mono"></td>
+            <td></td>
+            <td class="mono"></td>
+            <td><span class="pill ${String(status).toLowerCase().includes("block") ? "bad" : "ok"}"></span></td>
+            <td class="mono"></td>
+          `;
+          tr.children[0].textContent = id;
+          tr.children[1].textContent = contact;
+          tr.children[2].textContent = kyc;
+          tr.children[3].querySelector("span").textContent = status;
+          tr.children[4].textContent = created;
+          rows.appendChild(tr);
+        }
+      }
+
+      async function refresh() {
+        setAlert("");
+        const base = apiBase.value.trim();
+        localStorage.setItem("bit3unAdminApiBase", base);
+        $("apiStatus").className = "pill warn";
+        $("apiStatus").textContent = "checking";
+        try {
+          await getFirst(base, endpoints.health);
+          $("apiStatus").className = "pill ok";
+          $("apiStatus").textContent = "reachable";
+        } catch (error) {
+          $("apiStatus").className = "pill bad";
+          $("apiStatus").textContent = "offline";
+          setAlert(`API is not reachable yet: ${error.message}. Existing database data has not been touched.`);
+          renderUsers([]);
+          return;
+        }
+
+        try {
+          const summary = await getFirst(base, endpoints.summary);
+          $("usersMetric").textContent = summary.data.users_total ?? summary.data.usersTotal ?? "--";
+          $("ordersMetric").textContent = summary.data.open_orders ?? summary.data.openOrders ?? "--";
+          $("kycMetric").textContent = summary.data.kyc_pending ?? summary.data.kycPending ?? "--";
+        } catch {
+          $("usersMetric").textContent = "--";
+          $("ordersMetric").textContent = "--";
+          $("kycMetric").textContent = "--";
+        }
+
+        try {
+          const users = await getFirst(base, endpoints.users);
+          renderUsers(normalizeUsers(users.data));
+        } catch {
+          renderUsers([]);
+        }
+      }
+
+      $("saveBase").addEventListener("click", () => {
+        localStorage.setItem("bit3unAdminApiBase", apiBase.value.trim());
+        refresh();
+      });
+      $("refresh").addEventListener("click", refresh);
+      refresh();
+    </script>
+  </body>
+</html>

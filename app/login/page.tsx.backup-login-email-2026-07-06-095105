@@ -1,0 +1,100 @@
+"use client";
+
+import { useState } from "react";
+
+export default function Login() {
+
+  const [step, setStep] = useState<"login" | "otp">("login");
+  const [userId, setUserId] = useState("");
+
+  // STEP 1: LOGIN (EMAIL ONLY)
+  async function login(e:any) {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+
+    if (!data.ok) {
+      alert("خطا در ورود");
+      return;
+    }
+
+    setUserId(data.userId);
+    setStep("otp");
+  }
+
+  // STEP 2: VERIFY OTP (sent via Kavenegar backend)
+  async function verify(e:any) {
+    e.preventDefault();
+
+    const code = e.target.code.value;
+
+    const res = await fetch("/api/auth/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId,
+        code
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+      window.location.href = data.redirect;
+    } else {
+      alert("کد اشتباه است");
+    }
+  }
+
+  return (
+    <div style={{
+      maxWidth: 360,
+      margin: "80px auto",
+      padding: 20,
+      fontFamily: "sans-serif"
+    }}>
+
+      <h2>ورود به Bit3un</h2>
+
+      {/* EMAIL LOGIN */}
+      {step === "login" && (
+        <form onSubmit={login}>
+          <input
+            name="email"
+            type="email"
+            placeholder="ایمیل"
+            style={{ width: "100%", padding: 10, marginBottom: 10 }}
+          />
+
+          <button style={{ width: "100%", padding: 10 }}>
+            ارسال کد ورود
+          </button>
+        </form>
+      )}
+
+      {/* OTP STEP */}
+      {step === "otp" && (
+        <form onSubmit={verify}>
+          <input
+            name="code"
+            placeholder="کد تایید"
+            style={{ width: "100%", padding: 10, marginBottom: 10 }}
+          />
+
+          <button style={{ width: "100%", padding: 10 }}>
+            تایید ورود
+          </button>
+        </form>
+      )}
+
+    </div>
+  );
+}

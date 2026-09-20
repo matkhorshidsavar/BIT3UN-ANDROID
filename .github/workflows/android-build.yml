@@ -1,0 +1,39 @@
+name: Build Bit3un Android APK & AAB
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build Release APK and AAB
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease bundleRelease -x lint
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bit3un-apk
+          path: android/app/build/outputs/apk/release/*.apk
+
+      - name: Upload AAB Artifact (for Cafe Bazaar)
+        uses: actions/upload-artifact@v4
+        with:
+          name: bit3un-aab
+          path: android/app/build/outputs/bundle/release/*.aab
