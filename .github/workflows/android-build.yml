@@ -1,6 +1,8 @@
 name: Build Bit3un Android APK & AAB
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
